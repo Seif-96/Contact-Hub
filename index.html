@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contact-Hub" />
+  <link rel="icon" href="images/favicon.ico" type="favicon" />
+  <link rel="stylesheet" href="CSS/bootstrap.min.css" />
+  <link rel="stylesheet" href="CSS/all.min.css" />
+  <link rel="stylesheet" href="CSS/style.css" />
+  <link rel="stylesheet" href="CSS/media.css" />
+  <title>ContactHub - Smart Contact Manager</title>
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#nav" data-bs-offset="70">
+  <!-- Header -->
+  <header>
+    <nav class="navbar  border-bottom border-body fixed-top py-2 py-md-3 px-3  px-md-4" id="nav">
+      <div class="container-xxl">
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <div class="logo d-flex align-items-center column-gap-2 column-gap-md-3">
+            <div class=" f-logo fw-bold fs-5 text-light d-flex align-items-center justify-content-center">
+              <i class="fa-solid fa-address-book"></i>
+            </div>
+            <div class="logo-text">
+              <h1 class="p-0 m-0">Contact<span>Hub</span></h1>
+              <p class="p-0 m-0">Smart Contact Manager</p>
+            </div>
+          </div>
+          <div>
+            <ul class="d-flex items align-items-center m-0 column-gap-2 column-gap-md-3">
+              <li class="item">
+                <button class="btn px-3 py-2" id="btnNumOne" onclick="openForm()">+ Add<span>Contanct</span>
+                </button>
+              </li>
+              <li class="item-1">
+                <span class="icon-span fs-6"><i class="fa-solid fa-bell"></i></span>
+              </li>
+              <li class="item-1">
+                <span class="icon-span fs-6"><i class="fa-solid fa-gear"></i></span>
+              </li>
+              <li class="item-2">
+                <span class="icon-img">
+                  <img src="images/avatar.jpg" alt="avatar" />
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <!-- main -->
+  <main>
+    <!-- Hero / Recipe -->
+    <section class="heroRecipe">
+      <div class="container-xxl">
+        <div class="row row-cols-2 row-cols-md-3">
+          <div class="p-2">
+            <div class="items d-flex align-items-center gap-2 gap-md-3 p-2 p-md-3 rounded-4">
+              <div class="icons icon-1 d-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              <div>
+                <p class="text-muted m-0">Total</p>
+                <p class="m-0 text-black fs-5 fw-bold" id="numTotal">0</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-1">
+            <div class="items d-flex align-items-center gap-2 gap-md-3 p-2 p-md-3 rounded-4">
+              <div class="icons icon-2 d-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <div>
+                <p class="text-muted m-0">Favorites</p>
+                <p class="m-0 text-black fs-5 fw-bold" id="numFavorites">0</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-1">
+            <div class="items d-flex align-items-center gap-2 gap-md-3 p-2 p-md-3 rounded-4">
+              <div class="icons icon-3 d-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-heart-pulse"></i>
+              </div>
+              <div>
+                <p class="text-muted m-0">Emergency</p>
+                <p class="m-0 text-black fs-5 fw-bold" id="numEmergency">0</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Header & Search -->
+    <section>
+      <div class="container-xxl">
+        <div class="row">
+          <div class="col-12 col-lg-9">
+            <!-- text-head -->
+            <div class="text-head">
+              <h2 class="fw-bold m-0">All Contacts</h2>
+              <p>Manage and organize your <span id="contactsTotal">0</span> contacts</p>
+            </div>
+            <!-- searchInput -->
+            <div class="search position-relative mb-4">
+              <input class="form-control" oninput="searchContact()" list="searchInput" id="searchInput"
+                placeholder="Search by name, phone, or email...">
+              <i class="fa-solid fa-magnifying-glass position-absolute top-50 translate-middle-y"></i>
+            </div>
+            <!-- Contacts -->
+            <div id="noContactsFound" class="noContactsFound">
+              <div class="d-flex flex-column align-items-center justify-content-center">
+                <div class="f-logo fw-bold d-flex align-items-center justify-content-center mb-3">
+                  <i class="fa-solid fa-address-book"></i>
+                </div>
+                <p class="p-1 m-0">No contacts found</p>
+                <p class="p-2 m-0">Click "Add Contact" to get started</p>
+              </div>
+            </div>
+            <!-- addContacts -->
+            <div class="contacts d-none p-2" id="addContacts">
+              <div id="row" class="row row-cols-1 row-cols-md-2 ">
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-2 flex-fill mt-5 ms-lg-3 p-0">
+            <!-- favorites -->
+            <div class="favorites rounded-4 shadow-sm p-0 overflow-hidden mb-4 shadow-sm">
+              <div class="contect-all">
+                <div class="head-favorites d-flex align-items-center gap-2 p-3">
+                  <div class="icon-1 d-flex justify-content-center align-items-center text-white">
+                    <i class="fa-solid fa-star"></i>
+                  </div>
+                  <div>
+                    <h2 class="m-0">Favorites</h2>
+                    <p class="m-0">Quick access</p>
+                  </div>
+                </div>
+                <div id="favoritesContain" class="conten p-3">
+                  <p id="noFavoritesYet">No favorites yet</p>
+                  <!-- favorites contants -->
+                </div>
+              </div>
+            </div>
+            <!-- emergency -->
+            <div class="emergency rounded-4 shadow-sm p-0 overflow-hidden shadow-sm">
+              <div class="contect-all">
+                <div class="head-emergency d-flex align-items-center gap-2 p-3">
+                  <div class="icon-1 d-flex justify-content-center align-items-center text-white">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                  </div>
+                  <div>
+                    <h2 class="m-0">Emergency</h2>
+                    <p class="m-0">Urgent contacts</p>
+                  </div>
+                </div>
+                <div id="emergencyContian" class="conten p-3">
+                  <p id="noEmergency">No emergency contacts</p>
+                  <!-- emergency contants -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- form -->
+    <section>
+      <div class="lightBoxContainer p-3 d-none" id="lightBoxContainer">
+        <div class="lightBox overflow-x-auto rounded-4" id="lightBox">
+          <div class="text-top d-flex align-items-center justify-content-between border-bottom position-sticky top-0">
+            <h2>Add New Contact</h2>
+            <span id="close" onclick="closeForm()"><i class="fa-solid fa-xmark fs-6"></i></span>
+          </div>
+          <div class="form p-4">
+            <div class="d-flex flex-column align-items-center gap-2">
+              <div class="user fs-4">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <!-- userImage -->
+              <div>
+                <label class="userImage p-2 rounded" for="userImage">
+                  <i class="fa-solid fa-camera"></i>
+                  <span>Change Photo</span>
+                  <input class="hidden" type="file" name="images" id="userImage">
+                </label>
+              </div>
+              <!-- Full Name -->
+              <div class="mb-3 w-100">
+                <label for="userName" class="form-label">Full Name <span class="text-danger">*</span></label>
+                <input class="form-control" id="userName" oninput="validateInuts(this)" type="text"
+                  placeholder="Enter full name" aria-label="userName">
+                <p id="contactNameError" class="mt-1 m-0 d-none">Name should contain only letters and spaces
+                  (2-50
+                  characters)
+                </p>
+              </div>
+              <!-- phone Number -->
+              <div class="mb-3 w-100">
+                <label for="userNumber" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                <input class="form-control" id="userNumber" oninput="validateInuts(this)" type="tel"
+                  placeholder="e.g.,01012345678" aria-label="userNumber">
+                <p id="contactPhoneError" class="mt-1 m-0 d-none">Please enter a valid Egyptian phone number</p>
+              </div>
+              <!-- Email -->
+              <div class="mb-3 w-100">
+                <label for="userEmail" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="userEmail" oninput="validateInuts(this)"
+                  placeholder="name@example.com">
+                <p id="contactEmailError" class="mt-1 m-0 d-none">Please enter email address</p>
+              </div>
+              <!-- Address -->
+              <div class="mb-3 w-100">
+                <label for="userAddress" class="form-label">Address</label>
+                <input type="text" class="form-control" id="userAddress" oninput="validateInuts(this)"
+                  placeholder="Enter address">
+                <p id="contactAddressError" class="mt-1 m-0 d-none">Please enter your address</p>
+              </div>
+              <!-- group -->
+              <div class=" w-100">
+                <label for="selectGruop">Gruop</label>
+                <select id="selectGruop" class="form-control mt-2" oninput="validateInuts(this)" aria-label="group">
+                  <option value="Select a gruop" selected>Select a gruop</option>
+                  <option value="Family">Family</option>
+                  <option value="Friends">Friends</option>
+                  <option value="Work">Work</option>
+                  <option value="School">School</option>
+                  <option value="Other">Other</option>
+                </select>
+                <p id="selectGruopError" class="mt-1 m-0 d-none">Please Select a Gruop</p>
+              </div>
+              <!-- Notes -->
+              <div class="w-100">
+                <label for="aboutContact" class="form-label">Notes</label>
+                <textarea class="form-control no-resize" rows="2" placeholder="Add notes about this contact"
+                  id="aboutContact"></textarea>
+              </div>
+              <!-- cheak -->
+              <div class="w-100 d-flex align-items-center gap-3 mt-3">
+                <div class="form-check">
+                  <input class="form-check-input me-2" type="checkbox" value="Privacy" id="checkFavorite">
+                  <label class="form-check-label text-muted" for="checkFavorite">
+                    <i class="fa-solid fa-star text-warning fw-bold"></i><span>Favorite</span>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input me-2" type="checkbox" value="Privacy" id="checkEmergency">
+                  <label class="form-check-label text-muted" for="checkEmergency">
+                    <i class="fa-solid fa-heart-pulse text-danger fw-bold"></i><span>Emergency</span>
+                  </label>
+                </div>
+              </div>
+              <!-- btns -->
+              <div class="buttons row gap-2 w-100 mt-3">
+                <button onclick="closeForm()" class="btn btn-style1 px-3 py-2 col-5 flex-fill" id="btnCansel">Cansel
+                </button>
+                <button class="btn btn-style2 px-3 py-2 col-md-5 flex-fill" onclick="addContact()"
+                  id="btnSaveContact"><i class="fa-solid fa-check"></i>
+                  Save Contact</button>
+                <button class="btn btn-style2 px-3 py-2 col-md-5 flex-fill d-none" onclick="updateContact()"
+                  id="btnUpdateContact"><i class="fa-solid fa-check"></i>
+                  Save Contact</button>
+              </div>
+            </div>
+            </ب>
+          </div>
+        </div>
+    </section>
+    <!-- modals -->
+    <section class="modals">
+      <!-- deleteModal -->
+      <div id="deleteModal" class="modal">
+        <div class="modal-content">
+          <div class="icon">!</div>
+          <h2>Delete Contact?</h2>
+          <p>Are you sure you want to delete this contact? This action cannot be undone.</p>
+          <div class="buttons">
+            <button onclick="deleteContact()" class="deleteBtn">Yes, delete it!</button>
+            <button class="cancelBtn" onclick="closeModal()">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <!-- deleteSuccess -->
+      <div id="deleteSuccess" class="delete-success-modal d-none">
+        <div class="success-box">
+          <span class="check">✔</span>
+          <p class="text-muted fs-2 fw-bold">Deleted!</p>
+          <p class="text-muted">Contact has been deleted.</p>
+        </div>
+      </div>
+      <!-- addSuccess -->
+      <div id="addSuccess" class="add-success-modal d-none">
+        <div class="success-box">
+          <span class="check">✔</span>
+          <p class="text-muted fs-2 fw-bold">Added!</p>
+          <p class="text-muted">Contact has been added successfully.</p>
+        </div>
+      </div>
+      <!-- updateSuccess -->
+      <div id="updateSuccess" class="update-success-modal d-none">
+        <div class="success-box">
+          <span class="check">✔</span>
+          <p class="text-muted fs-2 fw-bold">Updated!</p>
+          <p class="text-muted">Contact has been updated successfully.</p>
+        </div>
+      </div>
+      <!-- errorModal -->
+      <div id="errorModal" class="error-modal d-none">
+        <div class="error-box">
+          <div class="error-icon">×</div>
+          <h2>Missing Data</h2>
+          <p>Please Check From Data.</p>
+          <button onclick="closeErrorModal()" class="ok-btn">OK</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="JS/bootstrap.bundle.min.js"></script>
+  <script src="JS/index.js"></script>
+</body>
+
+</html>

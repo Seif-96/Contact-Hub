@@ -1,0 +1,54 @@
+/* min-width */
+@media (min-width: 380px) {
+  /* headre */
+  header nav .logo .logo-text h1,
+  header nav .logo .logo-text p {
+    max-width: fit-content;
+  }
+}
+@media (min-width: 650px) {
+  /* nav */
+  header nav .logo .f-logo {
+    width: 2.8rem;
+    height: 2.8rem;
+    min-width: 2.8rem;
+    min-height: 2.8rem;
+  }
+  header nav .logo .logo-text h1 {
+    font-size: 1.5rem;
+  }
+  header nav .logo .logo-text p {
+    display: block;
+  }
+  header nav .items .item button span {
+    display: inline;
+  }
+  header nav .items .item-1 {
+    transition: 0.3s ease;
+    display: inline-block;
+  }
+  .lightBox {
+    width: 31.25rem;
+    height: 31.25rem;
+    min-width: 31.25rem;
+    min-height: 31.25rem;
+  }
+  .error-box {
+    width: 31.25rem;
+    min-width: 31.25rem;
+  }
+}
+@media (min-width: 768px) {
+  main {
+    margin-top: 5rem;
+  }
+  /* .headerSearch .text-head */
+  .headerSearch .text-head h2 {
+    font-size: 1.875rem;
+  }
+}
+@media (min-width: 1024px) {
+  .lightBox {
+    height: 34.375rem;
+  }
+}
