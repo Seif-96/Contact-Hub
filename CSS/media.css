@@ -37,6 +37,11 @@
     width: 31.25rem;
     min-width: 31.25rem;
   }
+  .update-success-modal .success-box,
+  .add-success-modal .success-box,
+  .delete-success-modal .success-box {
+    width: 31.25rem;
+  }
 }
 @media (min-width: 768px) {
   main {
