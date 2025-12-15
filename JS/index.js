@@ -612,7 +612,7 @@ if (localStorage.getItem("EmergencyList") == null) {
   emergencyList = JSON.parse(localStorage.getItem("EmergencyList"));
   displayEmergency(emergencyList);
   checkContactsEmergency();
-  styleingEmergencyContacts();
+  // styleingEmergencyContacts();
 }
 // addContactsEmergency
 function addContactsEmergency(index) {
@@ -625,8 +625,12 @@ function addContactsEmergency(index) {
   localStorage.setItem("EmergencyList", JSON.stringify(emergencyList));
   displayEmergency(emergencyList);
   updateCounterEmergency();
-  checkContactsEmergency();
-  styleingEmergencyContacts();
+  // checkContactsEmergency();
+  // styleingEmergencyContacts();
+  document.querySelector(".emergencyContact").classList.add("d-none");
+  document.querySelector(".emergency2Contact").classList.remove("d-none");
+  document.querySelector(".haert").classList.remove("d-none");
+  document.querySelector(".dataOfEmergency").classList.remove("d-none");
 }
 // deleteEmergency
 function deleteEmergency(index) {
@@ -634,8 +638,12 @@ function deleteEmergency(index) {
   localStorage.setItem("EmergencyList", JSON.stringify(emergencyList));
   displayEmergency(emergencyList);
   updateCounterEmergency();
-  checkContactsEmergency();
-  styleingEmergencyContacts();
+  // checkContactsEmergency();
+  // styleingEmergencyContacts();
+  document.querySelector(".emergencyContact").classList.remove("d-none");
+  document.querySelector(".emergency2Contact").classList.add("d-none");
+  document.querySelector(".haert").classList.add("d-none");
+  document.querySelector(".dataOfEmergency").classList.add("d-none");
 }
 // displayEmergency
 function displayEmergency(arr) {
@@ -667,47 +675,44 @@ function updateCounterEmergency() {
 }
 // checkContactsEmergency
 function checkContactsEmergency() {
-  var container = document.getElementById("emergencyContian");
   var noEmergencyMsg = document.getElementById("noEmergency");
-
   if (emergencyList.length === 0) {
     noEmergencyMsg.classList.remove("d-none");
-    container.classList.add("d-none");
   } else {
     noEmergencyMsg.classList.add("d-none");
-    container.classList.remove("d-none");
   }
 }
-function styleingEmergencyContacts() {
-  var allContacts = document.querySelectorAll(".items-Pernat");
+// styleingEmergencyContacts
+// function styleingEmergencyContacts() {
+//   var allContacts = document.querySelectorAll(".items-Pernat");
 
-  allContacts.forEach((contactDiv, i) => {
-    if (i >= userContacts.length) return;
+//   allContacts.forEach((contactDiv, i) => {
+//     if (i >= userContacts.length) return;
 
-    var currentName = userContacts[i].userName;
-    var currentNumber = userContacts[i].userNumber;
+//     var currentName = userContacts[i].userName;
+//     var currentNumber = userContacts[i].userNumber;
 
-    var emergencyBtn = contactDiv.querySelector(".emergencyContact");
-    var emergencyBtnActive = contactDiv.querySelector(".emergency2Contact");
-    var heartIcon = contactDiv.querySelector(".haert");
-    var emergencyBadge = contactDiv.querySelector(".dataOfEmergency");
+//     var emergencyBtn = contactDiv.querySelector(".emergencyContact");
+//     var emergencyBtnActive = contactDiv.querySelector(".emergency2Contact");
+//     var heartIcon = contactDiv.querySelector(".haert");
+//     var emergencyBadge = contactDiv.querySelector(".dataOfEmergency");
 
-    var isEmergency = emergencyList.some(
-      (item) =>
-        item.userNameEmergency === currentName &&
-        item.userNumberEmergency === currentNumber
-    );
+//     var isEmergency = emergencyList.some(
+//       (item) =>
+//         item.userNameEmergency === currentName &&
+//         item.userNumberEmergency === currentNumber
+//     );
 
-    if (isEmergency) {
-      emergencyBtn.classList.add("d-none");
-      emergencyBtnActive.classList.remove("d-none");
-      heartIcon.classList.remove("d-none");
-      emergencyBadge.classList.remove("d-none");
-    } else {
-      emergencyBtn.classList.remove("d-none");
-      emergencyBtnActive.classList.add("d-none");
-      heartIcon.classList.add("d-none");
-      emergencyBadge.classList.add("d-none");
-    }
-  });
-}
+//     if (isEmergency) {
+//       emergencyBtn.classList.add("d-none");
+//       emergencyBtnActive.classList.remove("d-none");
+//       heartIcon.classList.remove("d-none");
+//       emergencyBadge.classList.remove("d-none");
+//     } else {
+//       emergencyBtn.classList.remove("d-none");
+//       emergencyBtnActive.classList.add("d-none");
+//       heartIcon.classList.add("d-none");
+//       emergencyBadge.classList.add("d-none");
+//     }
+//   });
+// }
