@@ -362,27 +362,27 @@ function updateContact() {
       }
     }
     // update  emergencyList
-    // for (var i = 0; i < emergencyList.length; i++) {
-    //   if (
-    //     emergencyList[i].userNameEmergency === oldName &&
-    //     emergencyList[i].userNumberEmergency === oldNumber
-    //   ) {
-    //     emergencyList[i].userNameEmergency = userName.value;
-    //     emergencyList[i].userNumberEmergency = userNumber.value;
-    //   }
-    // }
+    for (var i = 0; i < emergencyList.length; i++) {
+      if (
+        emergencyList[i].userNameEmergency === oldName &&
+        emergencyList[i].userNumberEmergency === oldNumber
+      ) {
+        emergencyList[i].userNameEmergency = userName.value;
+        emergencyList[i].userNumberEmergency = userNumber.value;
+      }
+    }
     // localStorage of all
     localStorage.setItem("Contacts", JSON.stringify(userContacts));
     localStorage.setItem("FavoritesList", JSON.stringify(favoritesList));
-    // localStorage.setItem("EmergencyList", JSON.stringify(emergencyList));
+    localStorage.setItem("EmergencyList", JSON.stringify(emergencyList));
     // display
     display(userContacts);
     displayFavorites(favoritesList);
-    // displayEmergency(emergencyList);
+    displayEmergency(emergencyList);
     // updateCounter
     updateCounter();
     updateCounterFavorites();
-    // updateCounterEmergency();
+    updateCounterEmergency();
     btnSaveContact.classList.remove("d-none");
     btnUpdateContact.classList.add("d-none");
     lightBoxContainer.classList.add("d-none");
@@ -477,6 +477,7 @@ function errorModal() {
   var errorModal = document.getElementById("errorModal");
   errorModal.classList.remove("d-none");
 }
+// closeErrorModal
 function closeErrorModal() {
   document.getElementById("errorModal").classList.add("d-none");
 }
@@ -507,21 +508,21 @@ if (localStorage.getItem("FavoritesList") == null) {
   displayFavorites(favoritesList);
   updateCounterFavorites();
   styleingFavoritesContact();
-  checkContactsFavorite();
+  // checkContactsFavorite();
 }
 // for counter in Favorites
 function updateCounterFavorites() {
   document.getElementById("numFavorites").innerHTML = favoritesList.length;
 }
-function checkContactsFavorite() {
-  if (favoritesList.length === 0) {
-    document.querySelectorAll("#noFavoritesYet").classList.remove("d-none");
-    document.querySelectorAll("#haveFavorites").classList.add("d-none");
-  } else {
-    document.querySelectorAll("#noFavoritesYet").classList.add("d-none");
-    document.querySelectorAll("#haveFavorites").classList.remove("d-none");
-  }
-}
+// function checkContactsFavorite() {
+//   if (favoritesList.length === 0) {
+//     document.querySelector("#noFavoritesYet").classList.remove("d-none");
+//     document.querySelector("#haveFavorites").classList.add("d-none");
+//   } else {
+//     document.querySelector("#noFavoritesYet").classList.add("d-none");
+//     document.querySelector("#haveFavorites").classList.remove("d-none");
+//   }
+// }
 // addContactsFavorite
 function addContactsFavorite(index) {
   var favorites = {
@@ -534,7 +535,7 @@ function addContactsFavorite(index) {
   displayFavorites(favoritesList);
   styleingFavoritesContact();
   updateCounterFavorites();
-  checkContactsFavorite();
+  // checkContactsFavorite();
 }
 // displayFavorites
 function displayFavorites(arr) {
@@ -568,9 +569,10 @@ function deleteFavorite(deletedIndex) {
   displayFavorites(favoritesList);
   localStorage.setItem("FavoritesList", JSON.stringify(favoritesList));
   updateCounterFavorites();
-  checkContactsFavorite();
+  // checkContactsFavorite();
   styleingFavoritesContact();
 }
+// styleingFavoritesContact
 function styleingFavoritesContact() {
   var allContacts = document.querySelectorAll(".items-Pernat");
   var i;
@@ -611,8 +613,8 @@ if (localStorage.getItem("EmergencyList") == null) {
 } else {
   emergencyList = JSON.parse(localStorage.getItem("EmergencyList"));
   displayEmergency(emergencyList);
-  checkContactsEmergency();
-  // styleingEmergencyContacts();
+  // checkContactsEmergency();
+  styleingEmergencyContacts();
 }
 // addContactsEmergency
 function addContactsEmergency(index) {
@@ -626,11 +628,11 @@ function addContactsEmergency(index) {
   displayEmergency(emergencyList);
   updateCounterEmergency();
   // checkContactsEmergency();
-  // styleingEmergencyContacts();
-  document.querySelector(".emergencyContact").classList.add("d-none");
-  document.querySelector(".emergency2Contact").classList.remove("d-none");
-  document.querySelector(".haert").classList.remove("d-none");
-  document.querySelector(".dataOfEmergency").classList.remove("d-none");
+  styleingEmergencyContacts();
+  // document.querySelector(".emergencyContact").classList.add("d-none");
+  // document.querySelector(".emergency2Contact").classList.remove("d-none");
+  // document.querySelector(".haert").classList.remove("d-none");
+  // document.querySelector(".dataOfEmergency").classList.remove("d-none");
 }
 // deleteEmergency
 function deleteEmergency(index) {
@@ -639,11 +641,11 @@ function deleteEmergency(index) {
   displayEmergency(emergencyList);
   updateCounterEmergency();
   // checkContactsEmergency();
-  // styleingEmergencyContacts();
-  document.querySelector(".emergencyContact").classList.remove("d-none");
-  document.querySelector(".emergency2Contact").classList.add("d-none");
-  document.querySelector(".haert").classList.add("d-none");
-  document.querySelector(".dataOfEmergency").classList.add("d-none");
+  styleingEmergencyContacts();
+  // document.querySelector(".emergencyContact").classList.remove("d-none");
+  // document.querySelector(".emergency2Contact").classList.add("d-none");
+  // document.querySelector(".haert").classList.add("d-none");
+  // document.querySelector(".dataOfEmergency").classList.add("d-none");
 }
 // displayEmergency
 function displayEmergency(arr) {
@@ -678,41 +680,39 @@ function checkContactsEmergency() {
   var noEmergencyMsg = document.getElementById("noEmergency");
   if (emergencyList.length === 0) {
     noEmergencyMsg.classList.remove("d-none");
-  } else {
-    noEmergencyMsg.classList.add("d-none");
-  }
+  } 
 }
 // styleingEmergencyContacts
-// function styleingEmergencyContacts() {
-//   var allContacts = document.querySelectorAll(".items-Pernat");
+function styleingEmergencyContacts() {
+  var allContacts = document.querySelectorAll(".items-Pernat");
 
-//   allContacts.forEach((contactDiv, i) => {
-//     if (i >= userContacts.length) return;
+  allContacts.forEach((contactDiv, i) => {
+    if (i >= userContacts.length) return;
 
-//     var currentName = userContacts[i].userName;
-//     var currentNumber = userContacts[i].userNumber;
+    var currentName = userContacts[i].userName;
+    var currentNumber = userContacts[i].userNumber;
 
-//     var emergencyBtn = contactDiv.querySelector(".emergencyContact");
-//     var emergencyBtnActive = contactDiv.querySelector(".emergency2Contact");
-//     var heartIcon = contactDiv.querySelector(".haert");
-//     var emergencyBadge = contactDiv.querySelector(".dataOfEmergency");
+    var emergencyBtn = contactDiv.querySelector(".emergencyContact");
+    var emergencyBtnActive = contactDiv.querySelector(".emergency2Contact");
+    var heartIcon = contactDiv.querySelector(".haert");
+    var emergencyBadge = contactDiv.querySelector(".dataOfEmergency");
 
-//     var isEmergency = emergencyList.some(
-//       (item) =>
-//         item.userNameEmergency === currentName &&
-//         item.userNumberEmergency === currentNumber
-//     );
+    var isEmergency = emergencyList.some(
+      (item) =>
+        item.userNameEmergency === currentName &&
+        item.userNumberEmergency === currentNumber
+    );
 
-//     if (isEmergency) {
-//       emergencyBtn.classList.add("d-none");
-//       emergencyBtnActive.classList.remove("d-none");
-//       heartIcon.classList.remove("d-none");
-//       emergencyBadge.classList.remove("d-none");
-//     } else {
-//       emergencyBtn.classList.remove("d-none");
-//       emergencyBtnActive.classList.add("d-none");
-//       heartIcon.classList.add("d-none");
-//       emergencyBadge.classList.add("d-none");
-//     }
-//   });
-// }
+    if (isEmergency) {
+      emergencyBtn.classList.add("d-none");
+      emergencyBtnActive.classList.remove("d-none");
+      heartIcon.classList.remove("d-none");
+      emergencyBadge.classList.remove("d-none");
+    } else {
+      emergencyBtn.classList.remove("d-none");
+      emergencyBtnActive.classList.add("d-none");
+      heartIcon.classList.add("d-none");
+      emergencyBadge.classList.add("d-none");
+    }
+  });
+}
