@@ -81,8 +81,20 @@ function addContact() {
     contactAddressError.classList.contains("noErorr") &&
     selectGruopError.classList.contains("noErorr")
   ) {
-    contact = {
-      img: `images/${userImage.files[0]?.name}`,
+    // if num exists
+    var exists = false;
+    for (var i = 0; i < userContacts.length; i++) {
+      if (userContacts[i].userNumber === userNumber.value) {
+        exists = true;
+        break;
+      }
+    }
+    if (exists) {
+      errorExistsName();
+      return;
+    }
+    var contact = {
+      img: "images/" + (userImage.files[0] ? userImage.files[0].name : ""),
       userName: userName.value,
       userNumber: userNumber.value,
       userEmail: userEmail.value,
@@ -344,6 +356,18 @@ function updateContact() {
     // save value for update
     var oldName = userContacts[updateIndex].userName;
     var oldNumber = userContacts[updateIndex].userNumber;
+    // if num exists
+    var exists = false;
+    for (var i = 0; i < userContacts.length; i++) {
+      if (userContacts[i].userNumber === userNumber.value) {
+        exists = true;
+        break;
+      }
+    }
+    if (exists) {
+      errorExistsName();
+      return;
+    }
     // userContacts value
     userContacts[updateIndex].userName = userName.value;
     userContacts[updateIndex].userNumber = userNumber.value;
@@ -481,12 +505,21 @@ function errorModal() {
 function closeErrorModal() {
   document.getElementById("errorModal").classList.add("d-none");
 }
+// errorExistsName
+function errorExistsName() {
+  var errorExistsName = document.getElementById("errorExistsName");
+  errorExistsName.classList.remove("d-none");
+}
+// close errorExistsName
+function closeErrorExistsName() {
+  document.getElementById("errorExistsName").classList.add("d-none");
+}
 // validateInuts
 function validateInuts(element) {
   var regex = {
     userName: /^[a-zA-Z][a-z A-Z]{1,50}$/,
     userNumber: /^(\+2|2){0,1}01[0125][0-9]{8}$/,
-    userEmail: /^[a-zA-Z]\w{3,10}@(gmail|yahoo|hotmail)\.(com|net)$/,
+    userEmail: /^[a-zA-Z][\w.]{3,10}@(gmail|yahoo|hotmail)\.(com|net)$/,
     userAddress: /^[a-zA-Z][a-z A-Z]{2,50}$/,
     selectGruop: /^(Family|Friends|Work|School|Other)$/i,
   };
@@ -605,7 +638,6 @@ function styleingFavoritesContact() {
   }
 }
 //////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 // emergencyList
 var emergencyList;
 if (localStorage.getItem("EmergencyList") == null) {
@@ -680,7 +712,7 @@ function checkContactsEmergency() {
   var noEmergencyMsg = document.getElementById("noEmergency");
   if (emergencyList.length === 0) {
     noEmergencyMsg.classList.remove("d-none");
-  } 
+  }
 }
 // styleingEmergencyContacts
 function styleingEmergencyContacts() {
