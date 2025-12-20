@@ -101,9 +101,29 @@ function addContact() {
       userAddress: userAddress.value,
       selectGruop: selectGruop.value,
       aboutContact: aboutContact.value,
+      isFavorite: checkFavorite.checked,
+      isEmergency: checkEmergency.checked,
     };
     userContacts.push(contact);
+    // favorite
+    if (contact.isFavorite) {
+      favoritesList.push({
+        img: contact.img,
+        userNameFavorite: contact.userName,
+        userNumberFavorite: contact.userNumber,
+      });
+    }
+    // emergency
+    if (contact.isEmergency) {
+      emergencyList.push({
+        img: contact.img,
+        userNameEmergency: contact.userName,
+        userNumberEmergency: contact.userNumber,
+      });
+    }
     localStorage.setItem("Contacts", JSON.stringify(userContacts));
+    localStorage.setItem("FavoritesList", JSON.stringify(favoritesList));
+    localStorage.setItem("EmergencyList", JSON.stringify(emergencyList));
     lightBoxContainer.classList.add("d-none");
     addContacts.classList.remove("d-none");
     noContactsFound.classList.add("d-none");
@@ -112,6 +132,10 @@ function addContact() {
     checkContacts();
     addSuccess();
     display(userContacts);
+    displayFavorites(favoritesList);
+    displayEmergency(emergencyList);
+    styleingFavoritesContact();
+    styleingEmergencyContacts();
     clearInputs();
     updateCounter();
   } else {
@@ -321,8 +345,8 @@ function clearInputs() {
   userAddress.value = null;
   selectGruop.value = null;
   aboutContact.value = null;
-  checkFavorite.value = null;
-  checkEmergency.value = null;
+  checkFavorite.checked = false;
+  checkEmergency.checked = false;
 }
 // Edit Products
 var updateIndex;
@@ -334,6 +358,8 @@ function editContact(index) {
   userAddress.value = userContacts[index].userAddress;
   selectGruop.value = userContacts[index].selectGruop;
   aboutContact.value = userContacts[index].aboutContact;
+  checkFavorite.checked = userContacts[index].isFavorite;
+  checkEmergency.checked = userContacts[index].isEmergency;
   // checkEmergency.value
   btnSaveContact.classList.add("d-none");
   btnUpdateContact.classList.remove("d-none");
@@ -356,9 +382,12 @@ function updateContact() {
     // save value for update
     var oldName = userContacts[updateIndex].userName;
     var oldNumber = userContacts[updateIndex].userNumber;
-    // if num exists
+    // if num exists in another contact
     var exists = false;
     for (var i = 0; i < userContacts.length; i++) {
+      if (i === updateIndex) {
+        continue;
+      }
       if (userContacts[i].userNumber === userNumber.value) {
         exists = true;
         break;
@@ -375,6 +404,8 @@ function updateContact() {
     userContacts[updateIndex].userAddress = userAddress.value;
     userContacts[updateIndex].selectGruop = selectGruop.value;
     userContacts[updateIndex].aboutContact = aboutContact.value;
+    userContacts[updateIndex].isFavorite = checkFavorite.checked;
+    userContacts[updateIndex].isEmergency = checkEmergency.checked;
     // update  favoritesList
     for (var i = 0; i < favoritesList.length; i++) {
       if (
@@ -395,6 +426,54 @@ function updateContact() {
         emergencyList[i].userNumberEmergency = userNumber.value;
       }
     }
+    // Favorite
+    if (checkFavorite.checked === true) {
+      var existsFav = false;
+      for (var i = 0; i < favoritesList.length; i++) {
+        if (favoritesList[i].userNumberFavorite === userNumber.value) {
+          existsFav = true;
+          break;
+        }
+      }
+      if (existsFav === false) {
+        favoritesList.push({
+          img: userContacts[updateIndex].img,
+          userNameFavorite: userName.value,
+          userNumberFavorite: userNumber.value,
+        });
+      }
+    } else {
+      for (var i = 0; i < favoritesList.length; i++) {
+        if (favoritesList[i].userNumberFavorite === userNumber.value) {
+          favoritesList.splice(i, 1);
+          break;
+        }
+      }
+    }
+    // Emergency
+    if (checkEmergency.checked === true) {
+      var existsEmergency = false;
+      for (var i = 0; i < emergencyList.length; i++) {
+        if (emergencyList[i].userNumberEmergency === userNumber.value) {
+          existsEmergency = true;
+          break;
+        }
+      }
+      if (existsEmergency === false) {
+        emergencyList.push({
+          img: userContacts[updateIndex].img,
+          userNameEmergency: userName.value,
+          userNumberEmergency: userNumber.value,
+        });
+      }
+    } else {
+      for (var i = 0; i < emergencyList.length; i++) {
+        if (emergencyList[i].userNumberEmergency === userNumber.value) {
+          emergencyList.splice(i, 1);
+          break;
+        }
+      }
+    }
     // localStorage of all
     localStorage.setItem("Contacts", JSON.stringify(userContacts));
     localStorage.setItem("FavoritesList", JSON.stringify(favoritesList));
@@ -403,6 +482,8 @@ function updateContact() {
     display(userContacts);
     displayFavorites(favoritesList);
     displayEmergency(emergencyList);
+    styleingFavoritesContact();
+    styleingEmergencyContacts();
     // updateCounter
     updateCounter();
     updateCounterFavorites();
@@ -482,7 +563,6 @@ function showUpdateSuccess() {
 // DeletedSuccess
 function DeletedSuccess() {
   var modalDelete = document.getElementById("deleteSuccess");
-  console.log("wellcom");
   modalDelete.classList.remove("d-none");
   setTimeout(function () {
     modalDelete.classList.add("d-none");
@@ -541,21 +621,11 @@ if (localStorage.getItem("FavoritesList") == null) {
   displayFavorites(favoritesList);
   updateCounterFavorites();
   styleingFavoritesContact();
-  // checkContactsFavorite();
 }
 // for counter in Favorites
 function updateCounterFavorites() {
   document.getElementById("numFavorites").innerHTML = favoritesList.length;
 }
-// function checkContactsFavorite() {
-//   if (favoritesList.length === 0) {
-//     document.querySelector("#noFavoritesYet").classList.remove("d-none");
-//     document.querySelector("#haveFavorites").classList.add("d-none");
-//   } else {
-//     document.querySelector("#noFavoritesYet").classList.add("d-none");
-//     document.querySelector("#haveFavorites").classList.remove("d-none");
-//   }
-// }
 // addContactsFavorite
 function addContactsFavorite(index) {
   var favorites = {
@@ -568,7 +638,6 @@ function addContactsFavorite(index) {
   displayFavorites(favoritesList);
   styleingFavoritesContact();
   updateCounterFavorites();
-  // checkContactsFavorite();
 }
 // displayFavorites
 function displayFavorites(arr) {
@@ -602,7 +671,6 @@ function deleteFavorite(deletedIndex) {
   displayFavorites(favoritesList);
   localStorage.setItem("FavoritesList", JSON.stringify(favoritesList));
   updateCounterFavorites();
-  // checkContactsFavorite();
   styleingFavoritesContact();
 }
 // styleingFavoritesContact
@@ -717,24 +785,19 @@ function checkContactsEmergency() {
 // styleingEmergencyContacts
 function styleingEmergencyContacts() {
   var allContacts = document.querySelectorAll(".items-Pernat");
-
   allContacts.forEach((contactDiv, i) => {
     if (i >= userContacts.length) return;
-
     var currentName = userContacts[i].userName;
     var currentNumber = userContacts[i].userNumber;
-
     var emergencyBtn = contactDiv.querySelector(".emergencyContact");
     var emergencyBtnActive = contactDiv.querySelector(".emergency2Contact");
     var heartIcon = contactDiv.querySelector(".haert");
     var emergencyBadge = contactDiv.querySelector(".dataOfEmergency");
-
     var isEmergency = emergencyList.some(
       (item) =>
         item.userNameEmergency === currentName &&
         item.userNumberEmergency === currentNumber
     );
-
     if (isEmergency) {
       emergencyBtn.classList.add("d-none");
       emergencyBtnActive.classList.remove("d-none");

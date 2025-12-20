@@ -206,21 +206,21 @@
               </div>
               <!-- Email -->
               <div class="mb-3 w-100">
-                <label for="userEmail" class="form-label">Email address</label>
+                <label for="userEmail" class="form-label">Email address <span class="text-danger">*</span></label>
                 <input type="email" class="form-control" id="userEmail" oninput="validateInuts(this)"
                   placeholder="name@example.com">
                 <p id="contactEmailError" class="mt-1 m-0 d-none">Please enter email address</p>
               </div>
               <!-- Address -->
               <div class="mb-3 w-100">
-                <label for="userAddress" class="form-label">Address</label>
+                <label for="userAddress" class="form-label">Address <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="userAddress" oninput="validateInuts(this)"
                   placeholder="Enter address">
                 <p id="contactAddressError" class="mt-1 m-0 d-none">Please enter your address</p>
               </div>
               <!-- group -->
               <div class=" w-100">
-                <label for="selectGruop">Gruop</label>
+                <label for="selectGruop">Gruop <span class="text-danger">*</span></label>
                 <select id="selectGruop" class="form-control mt-2" oninput="validateInuts(this)" aria-label="group">
                   <option value="Select a gruop" selected>Select a gruop</option>
                   <option value="Family">Family</option>
